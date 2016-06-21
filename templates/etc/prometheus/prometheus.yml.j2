@@ -1,0 +1,28 @@
+global:
+  scrape_interval:     {{ prometheus_global_scrape_interval }} # By default, scrape targets every 15 seconds.
+  evaluation_interval: {{ prometheus_global_evaluation_interval }} # By default, scrape targets every 15 seconds.
+  # scrape_timeout is set to the global default (10s).
+
+{% if prometheus_rule_files is defined %}
+# Rule files specifies a list of files from which rules are read.
+rule_files:
+  {% for dest in prometheus_rule_files %}
+  - {{ prometheus_rules_path }}/{{ dest }}
+  {% endfor %}
+{% endif %}
+
+# A list of scrape configurations.
+scrape_configs:
+
+  - job_name: 'prometheus'
+    scrape_interval: {{ prometheus_global_scrape_interval }}
+    scrape_timeout:  {{ prometheus_global_evaluation_interval }}
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: "node"
+    file_sd_configs:
+      - files:
+        - '{{ prometheus_file_sd_config_dir }}/*.json'
+        - '{{ prometheus_file_sd_config_dir }}/*.yml'
+        - '{{ prometheus_file_sd_config_dir }}/*.yaml'
