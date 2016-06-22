@@ -8,6 +8,9 @@ prometheus_group: prometheus
 
 prometheus_global_scrape_interval: 15s
 prometheus_global_evaluation_interval: 15s
+prometheus_global_scrape_timeout: 10s
+prometheus_self_scrape_interval: "{{ prometheus_global_scrape_interval }}"
+prometheus_self_evaluation_interval: "{{ prometheus_global_scrape_interval }}"
 
 prometheus_release_name: "prometheus-{{ prometheus_version }}.linux-amd64"
 

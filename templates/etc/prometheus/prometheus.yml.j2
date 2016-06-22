@@ -1,7 +1,7 @@
 global:
   scrape_interval:     {{ prometheus_global_scrape_interval }} # By default, scrape targets every 15 seconds.
   evaluation_interval: {{ prometheus_global_evaluation_interval }} # By default, scrape targets every 15 seconds.
-  # scrape_timeout is set to the global default (10s).
+  scrape_timeout: {{ prometheus_global_scrape_timeout }} # By default, set timeout to 10 second.
 
 {% if prometheus_rule_files is defined %}
 # Rule files specifies a list of files from which rules are read.
@@ -15,8 +15,8 @@ rule_files:
 scrape_configs:
 
   - job_name: 'prometheus'
-    scrape_interval: {{ prometheus_global_scrape_interval }}
-    scrape_timeout:  {{ prometheus_global_evaluation_interval }}
+    scrape_interval: {{ prometheus_self_scrape_interval }}
+    scrape_timeout:  {{ prometheus_self_evaluation_interval }}
     static_configs:
       - targets: ['localhost:9090']
 
