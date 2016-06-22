@@ -20,9 +20,25 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  - job_name: "node"
-    file_sd_configs:
-      - files:
-        - '{{ prometheus_file_sd_config_dir }}/*.json'
-        - '{{ prometheus_file_sd_config_dir }}/*.yml'
-        - '{{ prometheus_file_sd_config_dir }}/*.yaml'
+{% for job in prometheus_jobs %}
+  - job_name: "{{ job.name }}"
+    scrape_interval: {{ job.scrape_interval | default(prometheus_global_scrape_interval) }}
+    {{ job.config_type | mandatory }}:
+{% for opt_name, opt_value in job.config_options.iteritems() %}
+{% if opt_value is string %}
+      {{ opt_name }}: '{{ opt_value }}'
+{% elif opt_value is sequence %}
+      - {{ opt_name }}:
+{% for value in opt_value %}
+{% if value is string %}
+        - '{{ value }}'
+{% elif value is mapping %}
+{% for key, val in value.iteritems() %}
+        {{ key }}: '{{ val }}'
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+{% endfor %}

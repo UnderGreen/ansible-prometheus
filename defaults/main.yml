@@ -32,3 +32,5 @@ prometheus_config_flags:
   'config.file': '{{ prometheus_config_dir }}/prometheus.yml'
   'storage.local.path': '{{ prometheus_db_dir }}'
   'web.external-url': '{{ prometheus_web_external_url }}'
+
+prometheus_jobs: []
