@@ -81,7 +81,7 @@
     group: root
     mode: 0644
   notify:
-    - systemd daemon-reload
+    - service reenable
     - restart prometheus
 
 - name: ensure prometheus service is enabled

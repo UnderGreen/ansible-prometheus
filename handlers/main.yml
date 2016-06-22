@@ -1,7 +1,7 @@
 ---
 
-- name: systemd daemon-reload
-  command: systemctl daemon-reload
+- name: service reenable
+  command: systemctl reenable prometheus.service
 
 - name: restart prometheus
   service:
