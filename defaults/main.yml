@@ -33,4 +33,21 @@ prometheus_config_flags:
   'storage.local.path': '{{ prometheus_db_dir }}'
   'web.external-url': '{{ prometheus_web_external_url }}'
 
+# Example configuration of jobs
+# prometheus_jobs:
+#   - name: files_sd
+#     config_type: file_sd_configs
+#     config_options:
+#       files:
+#         - '{{ prometheus_file_sd_config_dir }}/*.json'
+#         - '{{ prometheus_file_sd_config_dir }}/*.yml'
+#         - '{{ prometheus_file_sd_config_dir }}/*.yaml'
+#         - { refresh_interval: '30s' }
+#
+#   - name: static
+#     config_type: static_configs
+#     config_options:
+#       targets:
+#         - host.example.com:9000
+
 prometheus_jobs: []
