@@ -24,6 +24,14 @@ prometheus_config_dir: /etc/prometheus
 prometheus_pid_path: /var/run/prometheus.pid
 prometheus_db_dir: /var/lib/prometheus
 
+# Create additional directories
+# For example sd configs, based on projects
+# prometheus_extra_dirs:
+#   - '{{ prometheus_config_dir }}/project1/sd_configs'
+#   - '{{ prometheus_config_dir }}/project2/sd_configs'
+
+prometheus_extra_dirs: []
+
 prometheus_rule_files: []
 
 prometheus_web_external_url: "http://localhost:9090/"
