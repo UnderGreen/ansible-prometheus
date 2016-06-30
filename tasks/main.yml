@@ -64,7 +64,12 @@
     - restart prometheus
 
 - name: update group and owner for files
-  command: "chmod {{ prometheus_user}}:{{ prometheus_group }} -R {{ prometheus_release_name }}"
+  file:
+    path: "{{ prometheus_release_name }}"
+    state: directory
+    recurse: yes
+    owner: "{{ prometheus_user}}"
+    group: "{{ prometheus_group }}"
   when: prometheus_updated | changed
   
 - name: create symlink to the current release
