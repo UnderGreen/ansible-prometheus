@@ -40,7 +40,7 @@ This role doesn't have dependencies.
 ```yaml
 - hosts: monitoring
   roles:
-    - { role: greendayonfire.prometheus }
+    - { role: UnderGreen.prometheus }
   vars:
     prometheus_jobs:
       - name: files_sd
