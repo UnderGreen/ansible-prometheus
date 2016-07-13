@@ -12,4 +12,4 @@
   service:
     name: prometheus
     state: reloaded
-  when: {{ prometheus_service_reload }} 
+  when: "{{ prometheus_service_reload }}" 
