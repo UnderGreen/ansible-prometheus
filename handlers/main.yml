@@ -12,3 +12,4 @@
   service:
     name: prometheus
     state: reloaded
+  when: {{ prometheus_service_reload }} 
