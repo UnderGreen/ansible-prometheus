@@ -8,6 +8,7 @@
     - curl
     - tar
     - bzip2
+    - ca-certificates
 
 - name: create prometheus system group
   group:
@@ -21,6 +22,7 @@
     system: yes
     shell: "/sbin/nologin"
     group: "{{ prometheus_group }}"
+    groups: "ssl-cert"
     createhome: no
 
 - name: create prometheus directories
