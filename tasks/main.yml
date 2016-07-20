@@ -34,19 +34,10 @@
     - "{{ prometheus_root_dir }}"
     - "{{ prometheus_dist_dir }}"
     - "{{ prometheus_config_dir }}"
+    - "{{ prometheus_config_dir }}/conf.d"
     - "{{ prometheus_rules_dir }}"
     - "{{ prometheus_file_sd_config_dir }}"
     - "{{ prometheus_db_dir }}"
-
-- name: create prometheus extra directories
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: "{{ prometheus_user }}"
-    group: "{{ prometheus_group }}"
-    mode: 0755
-  with_items:
-    - "{{ prometheus_extra_dirs }}"
 
 - name: download prometheus server binary
   get_url:
