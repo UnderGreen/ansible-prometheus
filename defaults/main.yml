@@ -25,7 +25,7 @@ prometheus_config_dir: /etc/prometheus
 prometheus_pid_path: /var/run/prometheus.pid
 prometheus_db_dir: /var/lib/prometheus
 
-prometheus_rule_files: []
+prometheus_rules_files: []
 
 prometheus_web_external_url: "http://localhost:9090/"
 
