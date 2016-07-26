@@ -4,7 +4,7 @@ An Ansible role that installs Prometheus Monitoring server on Ubuntu-based machi
 
 ## Requirements
 
-All needed packages will be installed with this role.
+All needed packages will be installed with this role. Minimal Ansible version - 2.0.
 
 ## Role Variables
 
@@ -23,12 +23,14 @@ prometheus_config_dir: /etc/prometheus
 prometheus_pid_path: /var/run/prometheus.pid
 prometheus_db_dir: /var/lib/prometheus
 
-prometheus_web_external_url: "http://localhost:9090/"
+prometheus_web_listen_address: ":9090"
+prometheus_alertmanager_url: 'localhost:9093'
 
 prometheus_config_flags:
   'config.file': '{{ prometheus_config_dir }}/prometheus.yml'
   'storage.local.path': '{{ prometheus_db_dir }}'
-  'web.external-url': '{{ prometheus_web_external_url }}'
+  'web.listen-address': '{{ prometheus_web_listen_address }}'
+  'alertmanager.url': '{{ prometheus_alertmanager_url }}'
 ```
 All variables you can see [here](defaults/main.yml).
 
@@ -41,22 +43,18 @@ This role doesn't have dependencies.
 - hosts: monitoring
   roles:
     - { role: UnderGreen.prometheus }
-  vars:
-    prometheus_jobs:
-      - name: files_sd
-        config_type: file_sd_configs
-        config_options:
-          files:
-            - '{{ prometheus_file_sd_config_dir }}/*.json'
-            - '{{ prometheus_file_sd_config_dir }}/*.yml'
-            - '{{ prometheus_file_sd_config_dir }}/*.yaml'
-            - { refresh_interval: '30s' }
-
-      - name: static
-        config_type: static_configs
-        config_options:
-          targets:
-            - host.example.com:9000
+```
+You should create another config parts of main file inside `{{ playbook_dir }}/files/config_parts`.  
+I use Ansible [assembly](http://docs.ansible.com/ansible/assemble_module.html) and config parts should have alphabethical order. For example `2-static_sd.yml`:
+```yaml
+  - job_name: "files_sd"
+    scrape_interval: 15s
+    file_sd_configs:
+      - files:
+        - '/etc/prometheus/tgroups/*.json'
+        - '/etc/prometheus/tgroups/*.yml'
+        - '/etc/prometheus/tgroups/*.yaml'
+        refresh_interval: '5m'
 ```
 ## License
 
