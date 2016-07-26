@@ -27,9 +27,12 @@ prometheus_db_dir: /var/lib/prometheus
 
 prometheus_rules_files: []
 
-prometheus_web_external_url: "http://localhost:9090/"
+prometheus_web_listen_address: ":9090"
+prometheus_alertmanager_url: 'localhost:9093'
 
 prometheus_config_flags:
   'config.file': '{{ prometheus_config_dir }}/prometheus.yml'
   'storage.local.path': '{{ prometheus_db_dir }}'
-  'web.external-url': '{{ prometheus_web_external_url }}'
+  'web.listen-address': '{{ prometheus_web_listen_address }}'
+  'alertmanager.url': '{{ prometheus_alertmanager_url }}'
+
