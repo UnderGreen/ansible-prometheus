@@ -3,11 +3,11 @@ global:
   evaluation_interval: {{ prometheus_global_evaluation_interval }} # By default, scrape targets every 15 seconds.
   scrape_timeout: {{ prometheus_global_scrape_timeout }} # By default, set timeout to 10 second.
 
-{% if prometheus_rule_files is defined %}
+{% if prometheus_rules_files is defined %}
 # Rule files specifies a list of files from which rules are read.
 rule_files:
-  {% for dest in prometheus_rule_files %}
-  - {{ prometheus_rules_path }}/{{ dest }}
+  {% for dest in prometheus_rules_files %}
+  - {{ prometheus_rules_dir }}/{{ dest }}
   {% endfor %}
 {% endif %}
 

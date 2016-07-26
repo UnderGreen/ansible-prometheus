@@ -1,5 +1,18 @@
 ---
 
+- name: copy rule files from playbook directory
+  copy:
+    src: "{{ playbook_dir }}/files/rules/{{ item }}"
+    dest: "{{ prometheus_rules_dir }}/{{ item }}"
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    mode: 0644
+    validate: "{{ prometheus_bin_dir }}/promtool check-rules %s"
+  with_items:
+    - "{{ prometheus_rules_files }}"
+  notify:
+    - reload prometheus
+
 - name: copy prometheus 1st part config
   template:
     src: "etc/prometheus/prometheus.yml.j2"
@@ -27,19 +40,6 @@
     group: "{{ prometheus_group }}"
     mode: 0644
     validate: "{{ prometheus_bin_dir }}/promtool check-config %s"
-  notify:
-    - reload prometheus
-
-- name: copy rule files from playbook directory
-  copy:
-    src: "{{ playbook_dir }}/files/rules/{{ item }}"
-    dest: "{{ prometheus_rule_path }}/{{ item }}"
-    owner: "{{ prometheus_user }}"
-    group: "{{ prometheus_group }}"
-    mode: 0644
-    validate: "{{ prometheus_bin_dir }}/promtool check-rules %s"
-  with_items:
-    - "{{ prometheus_rule_files }}"
   notify:
     - reload prometheus
 
