@@ -9,6 +9,7 @@
     - tar
     - bzip2
     - ca-certificates
+    - ssl-cert
 
 - name: create prometheus system group
   group:
@@ -40,6 +41,7 @@
     - "{{ prometheus_rules_dir }}"
     - "{{ prometheus_file_sd_config_dir }}"
     - "{{ prometheus_db_dir }}"
+    - "{{ prometheus_log_dir }}"
 
 - name: download prometheus server binary
   get_url:
@@ -88,8 +90,20 @@
     owner: root
     group: root
     mode: 0644
+  when: ansible_service_mgr == 'systemd'
   notify:
     - service reenable
+    - restart prometheus
+
+- name: create init service unit
+  template:
+    src: etc/init/prometheus.conf.j2
+    dest: /etc/init/prometheus.conf
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_service_mgr == 'upstart'
+  notify:
     - restart prometheus
 
 - name: ensure prometheus service is enabled
