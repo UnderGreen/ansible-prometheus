@@ -1,4 +1,4 @@
-# Ansible Role: prometheus
+# Ansible Role: prometheus [![Build Status](https://travis-ci.org/UnderGreen/ansible-prometheus.svg?branch=travis_ci)](https://travis-ci.org/UnderGreen/ansible-prometheus)
 
 An Ansible role that installs Prometheus Monitoring server on Ubuntu-based machines with systemd.
 
