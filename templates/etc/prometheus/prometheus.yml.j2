@@ -13,9 +13,3 @@ rule_files:
 
 # A list of scrape configurations.
 scrape_configs:
-
-  - job_name: 'prometheus'
-    scrape_interval: {{ prometheus_self_scrape_interval }}
-    scrape_timeout:  {{ prometheus_self_evaluation_interval }}
-    static_configs:
-      - targets: ['localhost:9090']

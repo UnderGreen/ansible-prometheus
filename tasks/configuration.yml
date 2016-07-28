@@ -39,6 +39,7 @@
     owner: "{{ prometheus_user }}"
     group: "{{ prometheus_group }}"
     mode: 0644
+    delimiter: '\n### START FRAGMENT ###'
     validate: "{{ prometheus_bin_dir }}/promtool check-config %s"
   notify:
     - reload prometheus
