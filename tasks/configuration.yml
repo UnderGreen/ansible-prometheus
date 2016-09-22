@@ -2,7 +2,7 @@
 
 - name: copy rule files from playbook directory
   copy:
-    src: "{{ playbook_dir }}/files/rules/{{ item }}"
+    src: "{{ prometheus_rules_src_dir }}/{{ item }}"
     dest: "{{ prometheus_rules_dir }}/{{ item }}"
     owner: "{{ prometheus_user }}"
     group: "{{ prometheus_group }}"
@@ -29,7 +29,7 @@
     group: "{{ prometheus_group }}"
     mode: 0644
   with_fileglob:
-    - "{{ playbook_dir }}/files/config_parts/*"
+    - "{{ prometheus_config_parts_src_dir }}/*"
 
 - name: create main config from parts
   assemble:
@@ -52,4 +52,4 @@
     group: "{{ prometheus_group }}"
     mode: 0644
   with_fileglob:
-    - "{{ playbook_dir }}/files/tgroups/*"
+    - "{{ prometheus_tgroups_src_dir }}/*"
