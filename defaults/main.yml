@@ -43,3 +43,5 @@ prometheus_config_flags:
   'web.external-url': '{{ prometheus_web_external_url }}'
   'alertmanager.url': '{{ prometheus_alertmanager_url }}'
 
+prometheus_config_flags_extra: {}
+
