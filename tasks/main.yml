@@ -45,7 +45,7 @@
 
 - name: download prometheus server binary
   get_url:
-    url: "https://github.com/prometheus/prometheus/releases/download/{{ prometheus_version }}/{{ prometheus_release_name }}.tar.gz"
+    url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/{{ prometheus_release_name }}.tar.gz"
     dest: "{{ prometheus_dist_dir }}"
 
 - name: unarchive binary tarball
