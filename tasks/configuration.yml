@@ -1,7 +1,7 @@
 ---
 
 - name: register rules files exists on server
-  shell: "ls -1 {{ prometheus_rules_dir }} | awk -F. '{print $1}'"
+  shell: "ls -1 {{ prometheus_rules_dir }}"
   register: rules_content
   changed_when: False
 
