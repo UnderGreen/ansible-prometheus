@@ -106,6 +106,19 @@
   notify:
     - restart prometheus
 
+- name: change pam nofile limits for prometheus
+  pam_limits:
+    domain: "{{ prometheus_pam_domain }}"
+    limit_item: nofile
+    limit_type: "{{ item }}"
+    value: "{{ prometheus_pam_nofile_value }}"
+    use_max: yes
+  with_items:
+      - soft
+      - hard
+  notify:
+    - restart prometheus
+
 - name: ensure prometheus service is enabled
   service:
     name: prometheus

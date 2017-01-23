@@ -44,4 +44,6 @@ prometheus_config_flags:
   'alertmanager.url': '{{ prometheus_alertmanager_url }}'
 
 prometheus_config_flags_extra: {}
+prometheus_pam_domain: "prometheus"
+prometheus_pam_nofile_value: "1024"
 
