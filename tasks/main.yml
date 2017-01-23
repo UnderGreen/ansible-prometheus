@@ -119,7 +119,6 @@
   notify:
     - restart prometheus
 
-
 - name: ensure prometheus service is enabled
   service:
     name: prometheus
