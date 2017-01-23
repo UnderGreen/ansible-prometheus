@@ -113,7 +113,7 @@
     limit_type: "{{ item }}"
     value: "{{ prometheus_pam_nofile_value }}"
     use_max: yes
-  with_itmes:
+  with_items:
       - soft
       - hard
   notify:
