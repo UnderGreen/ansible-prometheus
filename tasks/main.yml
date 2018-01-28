@@ -66,7 +66,7 @@
     owner: "{{ prometheus_user}}"
     group: "{{ prometheus_group }}"
   when: prometheus_updated | changed
-  
+
 - name: create symlink to the current release
   file:
     src: "{{ prometheus_dist_dir }}/{{ prometheus_release_name }}"
