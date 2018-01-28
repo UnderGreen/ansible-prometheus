@@ -20,7 +20,7 @@
     owner: "{{ prometheus_user }}"
     group: "{{ prometheus_group }}"
     mode: 0644
-    validate: "{{ prometheus_bin_dir }}/promtool check-rules %s"
+    validate: "{{ prometheus_bin_dir }}/promtool check rules %s"
   with_items:
     - "{{ prometheus_rules_files }}"
   notify:
@@ -54,7 +54,7 @@
   when: "item != '1-prometheus.yml'"
 
 - name: copy another config parts
-  copy:
+  template:
     src: "{{ item }}"
     dest: "{{ prometheus_config_dir }}/conf.d/"
     owner: "{{ prometheus_user }}"
@@ -72,7 +72,7 @@
     group: "{{ prometheus_group }}"
     mode: 0644
     delimiter: '\n### START FRAGMENT ###'
-    validate: "{{ prometheus_bin_dir }}/promtool check-config %s"
+    validate: "{{ prometheus_bin_dir }}/promtool check config %s"
   notify:
     - reload prometheus
 
@@ -87,7 +87,7 @@
   changed_when: False
   become: False
   delegate_to: localhost
-  
+
 - name: delete unmanaged tgroups files
   file:
     path: "{{ prometheus_file_sd_config_dir }}/{{ item }}"
@@ -95,7 +95,7 @@
   with_items: "{{ tgroups_content.stdout_lines | difference(tgroups_local_content.stdout_lines) }}"
 
 - name: copy target group files from playbook directory
-  copy:
+  template:
     src: "{{ item }}"
     dest: "{{ prometheus_file_sd_config_dir }}/"
     owner: "{{ prometheus_user }}"
