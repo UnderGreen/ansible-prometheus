@@ -10,7 +10,7 @@ All needed packages will be installed with this role. Minimal Ansible version - 
 
 Available main variables are listed below, along with default values:
 ```yaml
-prometheus_version: 1.1.3
+prometheus_version: 2.1
 
 prometheus_global_scrape_interval: 15s
 prometheus_global_evaluation_interval: 15s
@@ -47,6 +47,7 @@ This role doesn't have dependencies.
 You should create another config parts of main file inside `{{ playbook_dir }}/files/config_parts`.  
 I use Ansible [assembly](http://docs.ansible.com/ansible/assemble_module.html) and config parts should have alphabethical order. For example `2-static_sd.yml`:
 ```yaml
+scrape_configs:
   - job_name: "files_sd"
     scrape_interval: 15s
     file_sd_configs:
@@ -56,6 +57,17 @@ I use Ansible [assembly](http://docs.ansible.com/ansible/assemble_module.html) a
         - '/etc/prometheus/tgroups/*.yaml'
         refresh_interval: '5m'
 ```
+
+Example 03-alertmanager.yml:
+```yaml
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+      - targets:
+        - '127.0.0.1:9093'
+```
+
 ## License
 
 GPLv2
