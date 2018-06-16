@@ -57,6 +57,17 @@ scrape_configs:
         - '/etc/prometheus/tgroups/*.yaml'
         refresh_interval: '5m'
 ```
+
+Example 03-alertmanager.yml:
+```yaml
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+      - targets:
+        - '127.0.0.1:9093'
+```
+
 ## License
 
 GPLv2
