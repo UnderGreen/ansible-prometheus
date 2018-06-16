@@ -47,6 +47,7 @@ This role doesn't have dependencies.
 You should create another config parts of main file inside `{{ playbook_dir }}/files/config_parts`.  
 I use Ansible [assembly](http://docs.ansible.com/ansible/assemble_module.html) and config parts should have alphabethical order. For example `2-static_sd.yml`:
 ```yaml
+scrape_configs:
   - job_name: "files_sd"
     scrape_interval: 15s
     file_sd_configs:
