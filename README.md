@@ -10,7 +10,7 @@ All needed packages will be installed with this role. Minimal Ansible version - 
 
 Available main variables are listed below, along with default values:
 ```yaml
-prometheus_version: 1.1.3
+prometheus_version: 2.1
 
 prometheus_global_scrape_interval: 15s
 prometheus_global_evaluation_interval: 15s
