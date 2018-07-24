@@ -1,5 +1,6 @@
 [Unit]
 Description=Prometheus
+Wants=network-online.target
 After=network.target
 
 [Service]
