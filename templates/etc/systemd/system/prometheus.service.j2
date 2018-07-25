@@ -1,3 +1,4 @@
+
 [Unit]
 Description=Prometheus
 Wants=network-online.target
@@ -6,12 +7,15 @@ After=network.target
 [Service]
 Type=simple
 EnvironmentFile=/etc/default/prometheus
-PIDFile={{ prometheus_pid_path }}
-User={{ prometheus_user }}
-Group={{ prometheus_group }}
+PIDFile=/var/run/prometheus.pid
+User=prometheus
+Group=prometheus
 ExecReload=/bin/kill -HUP $MAINPID
-ExecStart={{ prometheus_bin_dir }}/prometheus {% for flag, flag_value in prometheus_config_flags.iteritems() %}{{ flag }}={{ flag_value }} {% endfor %}{% for flag, flag_value in prometheus_config_flags_extra.iteritems() %}{{ flag }}={{ flag_value }} {% endfor %}
-
+ExecStart=/opt/prometheus/current/prometheus \
+--config.file=/etc/prometheus/prometheus.yml \
+--storage.tsdb.path=/var/lib/prometheus/ \
+--web.console.templates=/etc/prometheus/consoles \
+--web.console.libraries=/etc/prometheus/console_libraries
 SyslogIdentifier=prometheus
 Restart=always
 
